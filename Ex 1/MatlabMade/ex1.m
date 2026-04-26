@@ -13,8 +13,6 @@ sample_freqs = [480 960 1920 3840];
 total_time = 1/fund_freq * P;
 
 %Inicializa uma figura
-figure
-
 %Percorre todas as frequências de amostragem definidas no vetor
 for i = 1:length(sample_freqs)
     sf = sample_freqs(i);
@@ -31,7 +29,7 @@ for i = 1:length(sample_freqs)
 
     %Plota os gráficos um abaixo do outro, para cada frequência de
     %amostragem
-    subplot(length(sample_freqs),1,i)
+    figure(i)
     plot(disc_t,sinal,'lineWidth',2);
     xlabel('Tempo');
     ylabel('Amplitude');
