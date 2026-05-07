@@ -17,8 +17,8 @@ function X = fft(x,W)
     assert(N > 0 && bitand(N,N-1) == 0);
 
     % Divide o sinal entre par e ímpar
-    x_par = x(1:2:end);
-    x_impar = x(2:2:end);
+    x_par = x(1:2:end);     % Indíce 1 no matlab == indíce 0
+    x_impar = x(2:2:end);   % Indíce 2 no matlab == indíce 1
 
     % Gera uma partição dos coeficientes twiddles
     W_sub = W(1:2:end);
@@ -62,36 +62,55 @@ function X = dft(x)
     end
 end
 
+% Frequência fundamental de 50 Hz
 fund_freq = 50;
+
+% Pega 8 ciclos completos do sinal
 n_cycles = 8;
+
+% Como deve ter 2048 amostras por ciclos, multiplicamos a frequência funndamental por 2048
 sample_freq = fund_freq * 2048;
 
+% Cálculo do número de amostras
 sample_numb = (n_cycles/fund_freq) * sample_freq;
 
+% Discretização do tempo
 t = (0:sample_numb-1)/sample_freq;
 
+% Cria o sinaç
 signal = 1 * sin(2*pi*t*fund_freq);
+
+% Aplica a fft_radix2
 fft_signal = fft_radix2(signal);
+
+% Pega apenas o módulo das amplitudes para cada frequência
 fft_signal = abs(fft_signal);
 
+% Cria o vetor de frequências
 freqs_vec = (0:sample_numb-1) * (sample_freq/sample_numb);
 
+% Como o sinal é real, corta a frequência e o sinal pela metade (simetria)
 fft_signal = fft_signal(1:floor(sample_numb/2));
 freqs_vec = freqs_vec(1:floor(sample_numb/2));
 
+% Plota tudo
 figure(1)
 plot(t,signal,'r','LineWidth',2);
 figure(2)
 plot(freqs_vec,fft_signal,'r','LineWidth',2);
 
+% Vetor que armazena os tempos de execução da fft
 tempo_fft = zeros(1,30);
 
+% Executa a fft 30 vezes
 for k = 1:30
     tic
     trash_sig1 = fft_radix2(signal);
+    % Guarda tempo de execução da k-ésima vez
     tempo_fft(k) = toc;
 end
 
+% Faz a mesma coisa para a DFT
 tempo_dft = zeros(1,30);
 
 for k = 1:30
@@ -100,6 +119,7 @@ for k = 1:30
     tempo_dft(k) = toc;
 end
 
+% Plota os tempos
 figure(3)
 plot(1:30,tempo_fft,'b','LineWidth',2);
 figure(4)
