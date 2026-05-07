@@ -20,7 +20,7 @@ function X = fft(x,W)
     x_par = x(1:2:end);     % Indíce 1 no matlab == indíce 0
     x_impar = x(2:2:end);   % Indíce 2 no matlab == indíce 1
 
-    % Gera uma partição dos coeficientes twiddles
+    % Gera uma partição dos coeficientes twiddles, dado a propriedade que W_N[2k] == W_(N/2)[k]
     W_sub = W(1:2:end);
 
     % Aplica a FFT para o sinal repartido, na parte par e ímpar, recursivamente
