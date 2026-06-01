@@ -49,6 +49,19 @@ function X = fft_radix2(x)
     X = fft(x,W);
 end
 
+function x = ifft_my(X)
+    
+    % Tamanho do sinal
+    N = length(x);
+    % Índices dos twiddles possíveis
+    k = (0:(N/2) - 1);
+    % Cria o vetor com todos os twiddles possíveis
+    W = exp(-1j*2*pi*k/N);  
+
+    x = conj(fft(conj(X),W));
+end
+
+
 % DFT
 function X = dft(x)
     len = length(x);

@@ -12,7 +12,6 @@ sample_freqs = [480 960 1920 3840];
 %Calcula o tempo total de amostragem do sinal
 total_time = 1/fund_freq * P;
 
-%Inicializa uma figura
 %Percorre todas as frequências de amostragem definidas no vetor
 for i = 1:length(sample_freqs)
     sf = sample_freqs(i);
